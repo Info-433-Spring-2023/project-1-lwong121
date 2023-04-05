@@ -1,3 +1,5 @@
+**Lauren Wong and Sachi Figliolini**
+
 **Name of Project:** My Game List (MGL)
 
 **Who Created it:** Jerome Ortiz Orille, Gavin Patrick Pereira & Lauren Wong
