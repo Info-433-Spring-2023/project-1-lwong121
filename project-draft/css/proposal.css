@@ -1,0 +1,28 @@
+body {
+  background-color: #fff6de
+}
+
+section{
+  font-family: 'helvetica';
+}
+
+h1, h2{
+  font-family: 'Montserrat', sans-serif;
+  margin: 40px 0px 10px 15px;
+}
+
+h1:hover, h2:hover{
+  color: #b7a57a
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover{
+  color: #ff5d3d
+}
+
+p{
+  margin: 5px 30px 5px 30px;
+}

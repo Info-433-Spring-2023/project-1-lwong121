@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Jerome Ortiz Orille, Gavin Patrick Pereira & Lauren Wong">
+  <meta name="description" content="search results page">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="img/gamepad-solid.svg" aria-label="MGL gamepad logo">
+  <title>Results</title>
+</head>
+
+<body>
+  <header>
+    <h1><a href="index.html">MGL</a></h1>
+    <nav>
+      <div class="hamburger-menu"><a href="#"><i class="fa fa-bars" aria-label="menu"></i></a></div>
+      <div class="nav-icons">
+        <!-- <a href="index.html"><i class="fa fa-user-circle fa-lg" aria-label="User game list"></i></a> -->
+        <a href="search.html"><i class="fa fa-search fa-lg" aria-label="Search for a user"></i></a>
+        <a href="about.html"><i class="fa fa-info-circle fa-lg" aria-label="about MGL"></i></a>
+        <a class="btn" href="login.html">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <section>
+    <form class="search-form" action="search-result.html">
+      <label for="search-bar">Search:</label>
+      <input class="search-input" name="search-bar" placeholder="Search here..">
+      <button class="search-button" type="submit">
+        <i class="fa fa-arrow-circle-right fa-lg"></i>
+      </button>
+    </form>
+  </section>
+
+  <hr class="search-line">
+
+  <section class="users-section">
+    <section class="user-card">
+      <section class="user-pic">
+        <img class="profile" src="img/profile.png" alt="User Profile Pic">
+      </section>
+      <section class="user-info">
+        <h2>Johnny Joestar</h2>
+        <hr>
+        <p>Also plays:</p>
+        <div class="container" id="usergames">
+          <div class="card">
+            <!-- placeholder image from:
+              https://www.mobygames.com/images/covers/l/752735-death-s-door-windows-apps-front-cover.jpg -->
+            <img src="img/gameart/deathsdoor.jpg" alt="Death's Door game art">
+          </div>
+          <div class="card">
+            <!-- placeholder image from:
+              https://www.mobygames.com/images/covers/l/330413-uncharted-4-a-thief-s-end-playstation-4-front-cover.jpg-->
+            <img src="img/gameart/uncharted.jpg" alt="uncharted game art">
+          </div>
+          <div class="card">
+            <!-- placeholder image from:
+            https://www.mobygames.com/images/covers/l/384053-the-legend-of-zelda-breath-of-the-wild-limited-edition-nintendo-switch-front-cover.jpg-->
+            <img src="img/gameart/botw.jpg" alt="Breath of the Wild game art">
+          </div>
+          <div class="card">
+            <!-- placeholder image from:
+              https://www.mobygames.com/images/covers/l/537872-assassin-s-creed-odyssey-playstation-4-inside-cover.jpg-->
+            <img src="img/gameart/acodyssey.jpg" alt="Assassin's Creed Odyssey game art">
+          </div>
+          <div class="card">
+            <!-- placeholder image from:
+            https://www.mobygames.com/images/covers/l/765860-kena-bridge-of-spirits-windows-front-cover.jpg-->
+            <img src="img/gameart/kena.jpg" alt="kena Bridge of Spirits game art">
+          </div>
+        </div>
+      </section>
+    </section>
+    <hr class="search-line">
+    <section class="user-card">
+      <section class="user-pic">
+        <img class="profile" src="img/profile.png" alt="User Profile Pic">
+      </section>
+      <section class="user-info">
+        <h2>Alfonso</h2>
+        <hr>
+        <p>No shared games</p>
+      </section>
+    </section>
+  </section>
+
+  <hr class="search-line">
+
+  <section class="page-section">
+    <section class="arrow">
+      <a href="#"><i class="fa fa-arrow-left" aria-label="Left Arrow"></i></a>
+    </section>
+    <section>
+      <p>1</p>
+    </section>
+    <section class="arrow">
+      <a href="#"><i class="fa fa-arrow-right" aria-label="Right Arrow"></i></a>
+    </section>
+  </section>
+
+  <footer>
+    <p>Copyright© 2021 | Jerome Ortiz Orille, Gavin Patrick Pereira & Lauren Wong</p>
+  </footer>
+</body>
+
+</html>

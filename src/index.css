@@ -1,0 +1,901 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* GENERAL STYLES */
+/* Body */
+body {
+  color: white;
+  background-color: #060029;
+  font-family: 'Helvetica', sans-serif;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: white;
+}
+
+/* SEARCH AND RESULTS PAGE */
+/* Card styling */
+.user-search-header,
+.page-section,
+.user-card {
+  background-color: #2A3354;
+  border-radius: 9px;
+}
+
+/* Centering */
+.user-search-header,
+hr,
+.list-section,
+input.search-input,
+.user-card,
+.page-section {
+  margin: auto auto 1rem auto;
+}
+
+/* FontAwesome icon styling */
+nav a,
+.arrow a,
+.search-button {
+  color: #04C500;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+/* Specific navigation icon styling */
+nav a, .hamburger-menu {
+  text-decoration: none;
+  margin: 5px;
+}
+
+/* Lines */
+hr {
+  border: 1px solid #04C500;
+}
+
+/* Consistent width for centered objects */
+.search-line,
+.user-line,
+.user-card,
+.user-search-header,
+.list-section,
+input.search-input {
+  width: 300px;
+}
+
+/* Text to display when there are 0 results from searching */
+.zero-items {
+  text-align: center;
+}
+
+/* Hide end line in results page */
+.end-line {
+  display: none;
+}
+
+/* "Small" font styling */
+h3, li, .user-card {
+  font-size: .75rem;
+}
+
+/* List styling */
+.list-games {
+  padding: 0;
+}
+
+/* Footer */
+footer {
+  background-color: #232A46;
+  padding: 15px;
+  margin-top: 3rem;
+}
+
+/* Searching for Games */
+/* Header text */
+.games-container h2 {
+  margin: auto;
+  text-align: center;
+}
+
+/* Both containers */
+.genres-section, .games-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Genre container */
+.genres-section {
+  gap: 5px;
+}
+
+/* Hide checkbox */
+.genres-section .btn-check {
+  display: none;
+}
+
+/* Style checked buttons */
+.genres-section .btn.active.btn-primary {
+  background-color: #04C500;
+  color: #060029;
+}
+
+/* Style non-checked buttons */
+.genres-section .btn-primary {
+  background-color: #2A3354;
+  border-color:#04C500;
+  border-style: solid;
+  color: #FFFFFF;
+}
+
+/* Games container */
+.games-section {
+  flex: 50%;
+  gap: 20px 10px;
+  margin: 10px auto;
+}
+
+/* Rules for components that are shared across pages including header, footer, and button links. */
+/* New Header Search Bar */
+.nav-search-container {
+  margin: auto auto auto 1rem;
+  display: flex;
+  gap: 10px;
+}
+
+/* Hide label from view while keeping it accessible */
+.nav-search-label, .nav-search-option {
+  left: -100vw;
+  position: absolute;
+}
+
+.nav-search-input {
+  width: 150px;
+  padding: 8px;
+}
+
+/* Rules for header and navigation bar */
+header {
+  padding-left: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.default-nav {
+  padding: .5rem 1.5rem 0 0;
+}
+
+.hamburger-menu, .close-menu {
+  display: block;
+}
+
+.nav-icons {
+  display: none;
+}
+
+.nav-icon, .hamburger-menu, .close-menu {
+  margin-top: 1rem;
+  vertical-align: text-bottom;
+}
+
+h1 a {
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+}
+
+.close-menu {
+  align-self: flex-end;
+  margin-right: 1.2rem;
+}
+
+.menu-nav {
+  background-color: #2A3354;
+  top: 0;
+  right: 0;
+  width: 50%;
+  position: fixed;
+  padding: 1rem;
+  height: 100vh;
+  box-shadow: -2em 0 2em #060029;
+}
+
+.menu-nav div, .menu-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-nav div {
+  justify-content: space-between;
+}
+
+/* Search bar, used in both search.html/search-result.html */
+/* Primarily used as navigation from search.html to search-result.html */
+.search-label { /* Hide text while keeping it usable for screen readers */
+  opacity: 0;
+}
+
+.search-button { /* Hide background and border properties */
+  background: none;
+  border: none;
+  vertical-align: -15%; /* center icon */
+}
+
+.search-form {
+  text-align: center;
+}
+
+/* Padding for search bar */
+input.search-input {
+  padding: 10px;
+}
+
+/* User card styling for search-result.html */
+/* .user-card is a flexbox container */
+.user-card {
+  display: flex;
+  height: 150px;
+}
+
+.user-card .user-info {
+  padding-left: 1rem; /* change for media query */
+}
+
+.user-pic img {
+  margin: 1rem;
+  width: 50px;
+}
+
+.user-info hr {
+  width: 175px; /* default is 50% */
+  margin-left: 0;
+}
+
+/* search.html styling */
+/* Controls heading and list of games */
+.user-search-header {
+  text-align: center;
+  font-size: 1rem;
+  padding: 1.5rem .5rem;
+}
+
+/* search-result.html page styling */
+/* Controls page section at the bottom, where users can */
+/* change page numbers */
+.page-section {
+  display: flex;
+  align-items: center;
+  width: 5.8rem;
+}
+
+.page-section .arrow {
+  padding: 5px;
+}
+
+/* Game display preview */
+/* Note that the max-width is shared with the lines */
+.user-info .container {
+  max-width: 175px;
+}
+
+.user-info .container .card {
+  background: none;
+  overflow: hidden;
+  min-width: 40px;
+}
+
+.user-info .container .card img {
+  height: 28px;
+  width: 40px;
+}
+
+/* LOGIN/ABOUT PAGE */
+/* General flexbox rules */
+.login-section, .card-container, .reviews-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rules for buttons */
+.btn {
+  background-color: #04C500;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 1rem;
+  text-decoration: none;
+  color: #060029;
+  text-align: center;
+  border: none;
+}
+
+/* Hover behavior over buttons */
+.btn:hover,
+nav a:hover,
+.search-button:hover,
+.hamburger-menu:hover,
+.close-menu:hover,
+.active-star:hover,
+.fa-heart:hover,
+.login-section>button:hover {
+  cursor: pointer;
+  opacity: 70%;
+}
+
+/* Rules shared between login page and about page */
+.login-page, .about-page {
+  margin: 1rem auto;
+  width: 90%;
+}
+
+/* Input field rules */
+.login-form input, input.search-input, .reviews-section textarea,
+.nav-search-input, .nav-search-option-button {
+  color: white;
+  background-color: #2A3354;
+  border-radius: 9px;
+  border-color:#04C500;
+  border-style: solid;
+}
+
+.login-form input, .info-card {
+  margin: 1rem;
+  padding: 20px;
+}
+
+/* Rules for login page */
+.login-page section {
+  align-items: center;
+}
+
+.profile-img {
+  margin: 2rem;
+  width: 150px;
+}
+
+/* Styling for the login form */
+p, .login-form input, .google-signin {
+  font-size: 1rem;
+  color: white;
+}
+
+.login-form {
+  width: 80%;
+}
+
+.login-form input {
+  width: 100%;
+  margin-left: 0;
+}
+
+label {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.login-form .btn {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+/* Styling for google signin and create account on login page */
+.login-section div {
+  margin-top: 2rem;
+}
+
+.login-section>button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 2rem;
+  background-color: #4d618a;
+  border: none;
+}
+
+.login-section>button p {
+  display: inline;
+  vertical-align: super;
+}
+
+.google-signin img {
+  margin-right: 20px;
+  width: 1.5rem;
+}
+
+.login-section>p a, footer a, .hamburger-menu, .close-menu {
+  color: #04C500;
+}
+
+.error {
+  font-size: 1rem;
+  padding: 0.7rem;
+  background-color:rgba(255, 0, 0, 0.507);
+  text-align: center;
+  border-radius: 12px;
+}
+
+/* Styling for small introduction section on login page */
+.intro-section {
+  display: none;
+  flex-direction: column;
+  background-color: #2A3354;
+  padding: 50px;
+  text-align: center;
+  justify-content: center;
+  border-radius: 0 9px 9px 0;
+}
+
+/* Rules for about page */
+.about-page {
+  text-align: center;
+}
+
+.intro {
+  width: 80%;
+  margin: auto;
+}
+
+.about-page .btn {
+  display: inline-block;
+}
+
+.card-container {
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.info-card {
+  color: white;
+  background-color: #2A3354;
+  border-radius: 9px;
+}
+
+/* MYGAMES/SELECTED GAME PAGE */
+/* style for flexbox containers */
+.container {
+  display: flex;
+  overflow-x: auto;
+  margin: 1.5rem 1rem;
+  border-radius: 9px;
+}
+
+/* styles for each card containing videogame art */
+.card {
+  background: #303D57;
+  color: #ffffff;
+  border-radius: 9px;
+  height: 100px;
+  min-width: 200px;
+  margin-right: 15px;
+  margin-bottom: 1px;
+  overflow: hidden;
+}
+
+/* limit the image size of the cards */
+.card img {
+  height: 100px;
+}
+
+/* style the tags to sort the games specifically for the mobile view */
+.tag {
+  background: #303D57;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right:10px;
+  padding-left:10px;
+  margin-right: 10px;
+  border-radius: 9px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+/* style the big card used for the stats display */
+.big-card {
+  border-radius: 9px;
+  margin-right:5px;
+  background:#303D57;
+  flex-grow: 1;
+  padding: 15px;
+}
+
+/* style any tag that is selected */
+.selected {
+  background: #04C500;
+  color: #303D57;
+}
+
+/* make the tags appear selected on hover */
+.tag:hover {
+  background: #04C500;
+  color: #303D57;
+  cursor: pointer;
+}
+
+/* remove the horizontal scrollbar that browserts add by default */
+.container {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-x: scroll;
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+/* rules for the game info cards specifically */
+.gameInfo .card img {
+  min-width: 200px;
+  min-height: 280px;
+}
+
+.gameInfo .card {
+  min-height: 280px;
+}
+
+.gameInfo .card {
+  margin-right: 45px;
+}
+
+
+.gameInfo .container{
+  background-color: #1b253A
+}
+
+.num{
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.desc{
+  font-size: 1.5rem;
+}
+
+.stat-cards, .review-board {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.scard {
+  display:inline-flex;
+  background-color: #4d618a;
+  width: 90%;
+  margin: 10px;
+  border-radius: 12px;
+  flex-direction: column;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.scard > div {
+  text-align: center;
+}
+
+.border {
+  border-radius: 9px;
+  border-color: #04C500;
+  border-style: solid;
+  border-width: 3px;
+  padding: 2px, 2px, 2px, 2px;
+  display: inline-block;
+}
+
+.border h2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #04C500;
+  display: inline-block;
+}
+
+.mobile .container {
+  display: initial;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+}
+
+.desktop {
+  display: none;
+}
+
+/* Styling for the reviews section on the selected games page. */
+/* Create a review section at the bottom of the page. */
+.reviews-section textarea {
+  padding: 10px;
+  width: 100%;
+  font-family: 'Helvetica', sans-serif;
+}
+
+.reviews-section>div {
+  margin: 1rem;
+}
+
+.review-star, .reactions-section button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.active-star {
+  margin: 5px;
+}
+
+.fa-star {
+  color: gainsboro;
+}
+
+.star-selected, .fa-heart {
+  color: #04C500;
+}
+
+.reviews-section .btn {
+  border: none;
+}
+
+/* Styling for individual user review cards section */
+.review-profile {
+  max-width: 3rem;
+  height: auto;
+  display: inline-block;
+  filter: drop-shadow(4px 4px 6px black);
+}
+
+.review-board {
+  flex-direction: column;
+  width: 100%;
+}
+
+.review {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #303D57;
+  border-radius: 12px;
+  margin: 1.1rem;
+  text-align: left;
+  align-self: stretch;
+}
+
+.review-main {
+  margin: 1.5rem;
+}
+
+.review-header,
+.review-header>div,
+.reactions-section {
+  display: flex;
+  width: 100%;
+}
+
+.review-header {
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.review-header>div>div {
+  margin-left: 1rem;
+}
+
+.review p {
+  margin: 0;
+}
+
+.reactions-section {
+  background-color: #4d618a;
+  padding: 1rem;
+  border-radius: 0 0 12px 12px;
+}
+
+/* MEDIA QUERIES */
+/* Medium Screen Desktop */
+@media (min-width: 768px) {
+  /* Nav bar display changes */
+  .hamburger-menu, .profile-img {
+    display: none;
+  }
+
+  .nav-icons {
+    display: block;
+  }
+
+  .nav-search-input {
+    width: 250px;
+  }
+  /* Larger width for centered objects */
+  .search-line,
+  .user-line,
+  .user-card,
+  .user-search-header,
+  .list-section,
+  input.search-input {
+    width: 500px;
+  }
+
+  /* "Small" font size */
+  h3, .user-card {
+    font-size: 1rem;
+  }
+
+  /* Increased width of user hr */
+  .user-info hr {
+    width: 300px;
+  }
+
+  /* Increased h2 text size on search.html */
+  .user-search-header {
+    font-size: 1.5rem;
+  }
+
+  /* User card changes on search-result.html */
+  /* User card overall size increase */
+  .user-card {
+    height: 200px;
+  }
+
+  /* User images increase in size */
+  .user-pic img {
+    width: 100px;
+  }
+
+  /* Shared games general size increase */
+  .user-info .container {
+    max-width: 300px;
+  }
+
+  .user-info .container .card {
+    min-width: 92px;
+    margin-right: 20px;
+  }
+
+  .user-info .container .card img {
+    height: 42px;
+    width: 92px;
+  }
+  /* More space in between text and user image */
+  .user-card .user-info {
+    padding-left: 2rem;
+  }
+
+  /* LOGIN/ABOUT PAGE */
+  /* Transform into flexbox */
+  .login-page, .intro-section {
+    display: flex;
+  }
+
+  /* Rules for the login page */
+  .login-section {
+    background-color: #232A46;
+    padding: 20px;
+    border-radius: 9px 0 0 9px;
+  }
+
+  .login-page section {
+    width: 50%;
+  }
+
+  /* Rules for about page to make information 2 by 2 cards */
+  .card-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .info-card {
+    width: 45%;
+  }
+
+  /* MYGAMES PAGE */
+  .game-header {
+    margin-bottom: 5px
+  }
+
+  /* sets the size of the icons */
+  .icon {
+    width: 25px;
+    height: 25px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 0px;
+  }
+
+  /* reformats the tags at the top of the page for sorting games to make them */
+  /* bigger */
+  .tag{
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-right: 35px;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  .search {
+    display: initial;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+
+  .desktop {
+    display: initial;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .review {
+    width: 44%;
+  }
+
+  .review-board {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* Large Screen Desktop */
+@media (min-width: 1200px) {
+  /* Search Page Styling */
+  /* Increased width of everything */
+  /* hr change affects /results */
+  .search-line,
+  .user-line,
+  .end-line,
+  .user-search-header,
+  .list-section,
+  input.search-input {
+    width: 900px;
+  }
+
+  .user-search-header {
+    font-size: 3rem;
+  }
+
+  /* Search Results Page Styling */
+  /* The user section turns into a flexbox, which */
+  /* is used to style the cards into rows */
+  .users-section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .users-section .search-line {
+    display: none;
+  }
+
+  /* Show end line since search lines are hidden */
+  .end-line {
+    display: block;
+  }
+
+  .user-card {
+    margin: auto .5rem 1rem;
+  }
+
+  /* About Page Styling */
+  /* No flex wrap, display as a row */
+  .card-container {
+    flex-wrap: nowrap;
+  }
+}
