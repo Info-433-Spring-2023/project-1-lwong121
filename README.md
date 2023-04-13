@@ -20,12 +20,11 @@
 
 ## Class Diagram
 
-![Class Diagram](/images/INFO%20443%20Checkpoint%202%20Class%20Diagram.jpg)
+![Class Diagram](/images/INFO%20443%20Checkpoint%202%20-%20Class%20Diagram.jpg)
 
 ## Activity Diagram
 
-![Activity Diagram](/images/INFO%20443%20Checkpoint%202%20Activity%20Diagram.jpg)
+![Activity Diagram](/images/INFO%20443%20Checkpoint%202%20-%20Activity%20Diagram.jpg)
 
 **Selected Candidate Element:**
-
 Selected.js Components
