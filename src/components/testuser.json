@@ -1,0 +1,26 @@
+{
+  "uid": "EHEpbYv3HvfwzUAC8AaCsZgaSHq1",
+  "email": "unittestuser@email.com",
+  "emailVerified": false,
+  "displayName": "unittestuser",
+  "isAnonymous": false,
+  "providerData": [
+    {
+      "providerId": "password",
+      "uid": "unittestuser@email.com",
+      "displayName": "unittestuser",
+      "email": "unittestuser@email.com",
+      "phoneNumber": null,
+      "photoURL": null
+    }
+  ],
+  "stsTokenManager": {
+    "refreshToken": "APJWN8cy6ezJPfQxJOqwAFAcxYHCmRES1rchRwTxPosSf5NJAdW_mHCSwpUaxwg6vm4bJsdP4OCTsGDr3akHEpjrsRHOkKj3i2h083x7F1qI-jmJbw3iNTihT-BNcgjUPtFEC5_TXeqxksgJoivwsFMvf8hnh2DP01R157yNtRwDmlVhbO4Vi8Jg_MzNEQvkboiDWQTEsm0FVj6lJzXJScxwTyJ2_pmKFa_P92WPJDCi6YAyPYguWX4",
+    "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE2ZGE4NmU4MWJkNTllMGE4Y2YzNTgwNTJiYjUzYjUzYjE4MzA3NzMiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoidW5pdHRlc3R1c2VyIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL215Z2FtZWxpc3QtYTc3MjQiLCJhdWQiOiJteWdhbWVsaXN0LWE3NzI0IiwiYXV0aF90aW1lIjoxNjgyMDIwOTM4LCJ1c2VyX2lkIjoiRUhFcGJZdjNIdmZ3elVBQzhBYUNzWmdhU0hxMSIsInN1YiI6IkVIRXBiWXYzSHZmd3pVQUM4QWFDc1pnYVNIcTEiLCJpYXQiOjE2ODIwMjA5MzgsImV4cCI6MTY4MjAyNDUzOCwiZW1haWwiOiJ1bml0dGVzdHVzZXJAZW1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInVuaXR0ZXN0dXNlckBlbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.bZlEzJFD15-HPjHfH0x7M_vvFMYWN1TzUf38EiTrCf_24EsgLohYz76Vlc_8vZJE-w2Ptbd7oI57MArHuqJpD4o4oNuIxINPdfjOmoGHI60njxT9SafNNpBrVVxHE7yAcScW21f1vsnviMe65_lh6aRN1q-o7AejlEg3Ua0Pgf3r2nFJ8MEkUhqtH-7fuFroei2KKOhNPHcng3dBsyytS1BqVdZ5EzHRD4GHX09hDFxEHyAw0CKtxXAyiRSzB-LmUIAn40rtXSpMd1z22Fx1_0i1yp7yvUR5KTcbtWK4bSSga0mVw-TIxiwRrFgM8rmI3WvdaJO8wwDHZhr_Zk4JnQ",
+    "expirationTime": 1682024540330
+  },
+  "createdAt": "1682020862843",
+  "lastLoginAt": "1682020862843",
+  "apiKey": "AIzaSyDDDS9l68XzPdjIQbhfAdbohMv3RkaoAKk",
+  "appName": "[DEFAULT]"
+}

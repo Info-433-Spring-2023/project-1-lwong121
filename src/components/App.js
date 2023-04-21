@@ -21,6 +21,8 @@ export default function App(props) {
     setCurrentUser(auth.currentUser);
   });
 
+  console.log(currentUser);
+
   return (
     <div>
       <NavBar/>

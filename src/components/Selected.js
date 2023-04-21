@@ -20,10 +20,11 @@ export function SelectedGamePage(props) {
   });
   gameData = gameData[0];
   const db = getDatabase();
+
   return (
     <div>
       <GameInfo gameData={gameData} currentUser={currentUser} db={db} />
-      <ReviewsSection currentUser={currentUser} gameData={gameData} />
+      <ReviewsSection currentUser={currentUser} gameData={gameData} db={db} />
     </div>
   )
 }
@@ -76,9 +77,9 @@ export function GameInfo(props) {
 }
 
 export function ReviewsSection(props) {
-  const { gameData, currentUser } = props;
+  const { gameData, currentUser, db} = props;
   const [reviewsHistory, setReviewsHistory] = useState([]);
-  const db = getDatabase();
+  // const db = getDatabase();
   useEffect(() => {
     const allReviewsRef = ref(db, "allReviews");
     const finalCleanup = onValue(allReviewsRef, (snapshot) => {
@@ -151,7 +152,7 @@ export function ReviewsSection(props) {
   );
 }
 
-function ReviewBox(props) {
+export function ReviewBox(props) {
   const { gameData, currentUsers, submitReview } = props;
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
@@ -176,7 +177,7 @@ function ReviewBox(props) {
         onChange={handleInputChanges}
         required
       ></textarea>
-      <button className="btn" onClick={handleSubmit}>Submit</button>
+      <button className="btn" name="submit" onClick={handleSubmit}>Submit</button>
     </form>
   )
 }
@@ -233,7 +234,7 @@ function Review(props) {
       reviewStarClass = "";
     }
     return (
-      <button className="review-star" key={currIndex} >
+      <button name="reviewStar" className="review-star" key={currIndex} >
         <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
       </button>
     )
