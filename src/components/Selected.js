@@ -77,9 +77,8 @@ export function GameInfo(props) {
 }
 
 export function ReviewsSection(props) {
-  const { gameData, currentUser, db} = props;
+  const { gameData, currentUser, db } = props;
   const [reviewsHistory, setReviewsHistory] = useState([]);
-  // const db = getDatabase();
   useEffect(() => {
     const allReviewsRef = ref(db, "allReviews");
     const finalCleanup = onValue(allReviewsRef, (snapshot) => {
@@ -123,8 +122,10 @@ export function ReviewsSection(props) {
   if (reviewsHistory.length > 0) {
     gameReviewsToDisplay = (
       <div>
-        <p>Overall: <FontAwesomeIcon className="star-selected" icon={faStar} size="lg"></FontAwesomeIcon>
-          &nbsp;&nbsp;{avgRating} out of 5</p>
+        <div>
+          <FontAwesomeIcon className="star-selected" icon={faStar} size="lg"></FontAwesomeIcon>
+          <p className="average-rating">Overall: {avgRating} out of 5</p>
+        </div>
         <GameReviews reviewsHistory={reviewsHistory} db={db} currentUser={currentUser} />
       </div>
     )
@@ -157,19 +158,24 @@ export function ReviewBox(props) {
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
   const handleInputChanges = (event) => {
+    event.preventDefault();
     setReviewText(event.target.value);
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (reviewText === "" && rating === 0) {
+      return;
+    }
     submitReview(reviewText, currentUsers, gameData.name, rating);
     setReviewText('');
     setRating(0);
   }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <ReviewStars rating={rating} setRating={setRating} />
       <label htmlFor="review">Write your review</label>
       <textarea
+        type="textarea"
         id="review"
         rows="6"
         placeholder="Enter a review"
@@ -177,7 +183,7 @@ export function ReviewBox(props) {
         onChange={handleInputChanges}
         required
       ></textarea>
-      <button className="btn" name="submit" onClick={handleSubmit}>Submit</button>
+      <button type="submit" className="btn">Submit</button>
     </form>
   )
 }
@@ -197,7 +203,7 @@ function ReviewStars(props) {
       setRating(currIndex);
     }
     return (
-      <button className="review-star" key={currIndex} onClick={handleRating} >
+      <button type="button" aria-label="reviewStar" className="review-star" key={currIndex} onClick={handleRating} >
         <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
       </button>
     )
@@ -234,9 +240,9 @@ function Review(props) {
       reviewStarClass = "";
     }
     return (
-      <button name="reviewStar" className="review-star" key={currIndex} >
-        <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
-      </button>
+      <span className="review-star" key={currIndex} >
+        <FontAwesomeIcon title="reviewStar" role="img" className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
+      </span>
     )
   });
   const date = new Date(review.timestamp);
@@ -244,7 +250,7 @@ function Review(props) {
   timePosted = timePosted.split(", ")[0];
   timePosted = timePosted.substring(0, timePosted.length - 4) + timePosted.substring(timePosted.length - 2);
   return (
-    <div className="review">
+    <div data-testid="reviewCard" className="review">
       <div className="review-main">
         <div className="review-header">
           <div>
@@ -258,7 +264,7 @@ function Review(props) {
         </div>
         <p>{review.review}</p>
       </div>
-      {currentUser && <ReactionsSection db={db} reviewFirebaseKey={review.firebaseKey} />}
+      {currentUser && <ReactionsSection data-testid="reaction-section" db={db} reviewFirebaseKey={review.firebaseKey} />}
     </div>
   )
 }
@@ -270,11 +276,15 @@ function ReactionsSection(props) {
   const reviewLikesRef = ref(db, "allReviews/" + reviewFirebaseKey + "/likes");
 
   useEffect(() => {
+    let isMounted = true
     onValue(reviewLikesRef, (snapshot) => {
-      const likes = snapshot.val();
-      setLikes(likes);
+      if (isMounted) {
+        const likes = snapshot.val();
+        setLikes(likes);
+      }
     })
     return () => {
+      isMounted = false;
       setLikes(0);
     }
   }, [])
@@ -286,7 +296,7 @@ function ReactionsSection(props) {
   }
   return (
     <div className="reactions-section">
-      <button onClick={likeReview}>
+      <button role="button" aria-label="likeButton" onClick={likeReview}>
         <FontAwesomeIcon icon={faHeart} size="lg"></FontAwesomeIcon>
       </button>
       <p>&nbsp;{likes}</p>

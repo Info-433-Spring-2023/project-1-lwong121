@@ -17,6 +17,11 @@ body {
   color: white;
 }
 
+.average-rating {
+  display: inline;
+  margin: 0px 10px;
+}
+
 /* SEARCH AND RESULTS PAGE */
 /* Card styling */
 .user-search-header,

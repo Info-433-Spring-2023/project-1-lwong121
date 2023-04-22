@@ -8,7 +8,6 @@ import TEST_USER from './testuser.json';
 import { getDatabase, connectDatabaseEmulator, ref } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
-// copied from firebase-config.js
 const firebaseConfig = {
   apiKey: "AIzaSyDDDS9l68XzPdjIQbhfAdbohMv3RkaoAKk",
   authDomain: "mygamelist-a7724.firebaseapp.com",
@@ -20,13 +19,9 @@ const firebaseConfig = {
   measurementId: "${config.measurementId}"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// copied from https://firebase.google.com/docs/emulator-suite/connect_rtdb and slides
 const db = getDatabase();
 if (location.hostname === "localhost") {
-  // Point to the RTDB emulator running on localhost.
   connectDatabaseEmulator(db, "localhost", 9000);
 }
 
@@ -37,12 +32,11 @@ const gameData = HUGE_GAME_DATA.find((game) => {
 
 describe("Unit: Review Forms", () => {
   describe("Render Review", () => {
-    test("Did the review render?", () => {
+    test("Check if review rendered", () => {
       const reviewText = "test review";
 
       render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
-      // enter some text
       const formInput = screen.getByRole("textbox");
       userEvent.type(formInput, reviewText);
 
@@ -50,36 +44,98 @@ describe("Unit: Review Forms", () => {
 
       expect(screen.getByText(reviewText)).toBeInTheDocument();
     })
-  })//,
-  // describe("Render Stars", () => {
-  //   test("Did the stars render?", () => {
-  //     const reviewText = "test stars";
+  }),
+    describe("Render Stars", () => {
+      test("Check if star rating rendered", () => {
+        const starRating = 3;
 
-  //     render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
-  //     // enter some text
-  //     const formInput = screen.getByRole("textbox");
-  //     userEvent.type(formInput, reviewText);
+        const formStars = screen.getAllByRole("button", { name: 'reviewStar' });
+        userEvent.click(formStars[starRating]);
 
-  //     userEvent.click(screen.getByRole("button", { name: /submit/i }));
+        userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
-  //     expect(screen.getByRole("button", {name: /reviewStar/i})).toBeInTheDocument();
-  //   })
-  // }),
-  // describe("Don't Render Empty Review", () => {
-  //   test("Did the empty review render?", () => {
-  //     const reviewText = "test review";
+        const reviewStars = screen.getAllByRole("img", { name: 'reviewStar' });
+        for (let i = 0; i < reviewStars.length; i++) {
+          if (i <= starRating) {
+            expect(reviewStars[i].classList).toContain("star-selected");
+          } else {
+            expect(reviewStars[i].classList).not.toContain("star-selected");
+          }
+        }
+      })
+    }),
+    describe("Don't Render Empty Review", () => {
+      test("Check that empty review did not render", () => {
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
-  //     render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+        userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
-  //     // enter some text
-  //     const formInput = screen.getByRole("textbox");
-  //     userEvent.type(formInput, reviewText);
+        expect(screen.queryByTestId("reviewCard")).toBeNull();
+      })
+    }),
+    describe("Clear Content After Submit", () => {
+      test("Check that the textbox is cleared after submit", () => {
+        const reviewText = "test review clears";
 
-  //     userEvent.click(screen.getByRole("button", { name: /submit/i }));
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
-  //     console.log(screen.getByText(reviewText));
-  //     expect(screen.getByText(reviewText)).toBeInTheDocument();
-  //   })
-  // })
+        const formInput = screen.getByRole("textbox");
+        userEvent.type(formInput, reviewText);
+
+        userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+        expect(screen.getByText(reviewText)).toBeInTheDocument();
+
+        expect(screen.queryByDisplayValue(reviewText)).not.toBeInTheDocument();
+      })
+    }),
+    describe("Correct Average Rating Calculation", () => {
+      test("Check that the average rating is calculated properly", () => {
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+
+        const starRatings = [3, 5, 2, 4, 1];
+        const formStars = screen.getAllByRole("button", { name: 'reviewStar' });
+
+        for (let i = 0; i < starRatings.length; i++) {
+          userEvent.click(formStars[i]);
+          userEvent.click(screen.getByRole("button", { name: /submit/i }));
+        }
+
+        const avgRating = screen.getByText(/Overall:/i).textContent;
+        expect(avgRating).toMatch(/3 out of 5/i);
+      })
+    }),
+    describe("No Reviews Displayed", () => {
+      test("Check that no reviews are displayed when there are no reviews", () => {
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+
+        expect(screen.queryByTestId("reviewCard")).toBeNull();
+        expect(screen.getByText("Sorry, no reviews yet...")).toBeInTheDocument();
+      })
+    }),
+    describe("Like a Review", () => {
+      test("Check that liking a review add one like", () => {
+        const reviewText = "test review";
+
+        render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+
+        const formInput = screen.getByRole("textbox");
+        userEvent.type(formInput, reviewText);
+
+        userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+        const likeBtn = screen.getByRole("button", { name: /likeButton/i });
+        const getNumLikes = () => {
+          return parseInt(likeBtn.nextElementSibling.textContent);
+        }
+
+        expect(getNumLikes()).toEqual(0);
+
+        userEvent.click(likeBtn);
+
+        expect(getNumLikes()).toEqual(1);
+      })
+    })
 })
