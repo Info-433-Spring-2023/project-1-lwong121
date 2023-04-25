@@ -1,12 +1,12 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReviewsSection, ReviewBox } from "./Selected";
+import { ReviewsSection } from "./ReviewsSection";
 import HUGE_GAME_DATA from '../data/games.json';
 import TEST_USER from './testuser.json';
-
-import { getDatabase, connectDatabaseEmulator, ref } from "firebase/database";
+import { getDatabase, connectDatabaseEmulator} from "firebase/database";
 import { initializeApp } from "firebase/app";
+import React from 'react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDDDS9l68XzPdjIQbhfAdbohMv3RkaoAKk",
@@ -136,6 +136,54 @@ describe("Unit: Review Forms", () => {
         userEvent.click(likeBtn);
 
         expect(getNumLikes()).toEqual(1);
+      })
+    }),
+    // attempt to test the missing lines (17-25 in ReviewsSection.js for the
+    // finalCleanup() method mentioned in the code coverage report
+    describe("Test finalCleanup() function", () => {
+      test("Test that the finalCleanup() when page is rendered", () => {
+        // attempt 1:
+        // const fn = jest.fn(() => {
+        //   const [reviewsHistory, setReviewsHistory] = useState([]);
+        //   useEffect(() => {
+        //     setReviewsHistory([{
+        //       "game": "Counter-Strike",
+        //       "likes": 0,
+        //       "rating": 3,
+        //       "review": "test review",
+        //       "timestamp": 1682320097887,
+        //       "userEmail": "unittestuser@email.com",
+        //       "userId": "EHEpbYv3HvfwzUAC8AaCsZgaSHq1",
+        //       "userName": "unittestuser",
+        //       "firebaseKey": "-NTm4sCQb-JZfILJI0he"
+        //     }]);
+        //   });
+        //   return reviewsHistory;
+        // });
+
+        // attempt 2
+        let cleanupFunc;
+
+        const spy = jest.spyOn(React, "useEffect").mockImplementationOnce(func => {
+          cleanupFunc = func;
+        });
+
+        const reviewsSection = render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+        expect(spy).toHaveBeenCalled(); // but how do I test the finalCleanup() function?!
+
+        // attempt 3
+        // const reviewText = "test review";
+
+        // const { unmount } = render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+
+        // const formInput = screen.getByRole("textbox");
+        // userEvent.type(formInput, reviewText);
+
+        // userEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+        // console.log(screen.getByText(reviewText));
+        // expect(screen.getByText(reviewText)).toBeInTheDocument();
+        // unmount();
       })
     })
 })
