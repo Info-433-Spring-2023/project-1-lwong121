@@ -32,6 +32,20 @@ Selected.js Components
 
 # Checkpoint 3
 
+**Instructions for how to run tests:**
+
+npm install the following:
+* -g firebase-tools
+* react-scripts
+* jest-dom
+* --save-dev @testing-library/jest-dom
+* --save-dev @testing-library/react
+* --save-dev @testing-library/user-event
+* firebase
+* @fortawesome/react-fontawesome
+* @fortawesome/free-solid-svg-icons
+
+
 **Note on missing code coverage:**
 
 We are aware of the missing code coverage for lines 17-25, which corresponds to the `finalCleanup()` function in the `useEffect()` under the `<ReviewsSection>` component in ReviewsSection.js. But after several attempts (as seen in the "Test finalCleanup() function" test), we have not yet managed to solve this issue.
