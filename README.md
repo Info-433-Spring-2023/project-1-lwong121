@@ -45,6 +45,8 @@ npm install the following:
 * @fortawesome/react-fontawesome
 * @fortawesome/free-solid-svg-icons
 
+then run npm test and type a to run all tests
+
 
 **Note on missing code coverage:**
 
