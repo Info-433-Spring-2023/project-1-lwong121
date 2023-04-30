@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReviewsSection } from "./ReviewsSection";
+import { ReviewsSection } from "../components/ReviewsSection"
 import HUGE_GAME_DATA from '../data/games.json';
-import TEST_USER from './testuser.json';
+import TEST_USER from '../components/testuser.json';
 import { getDatabase, connectDatabaseEmulator} from "firebase/database";
 import { initializeApp } from "firebase/app";
 import React from 'react';
@@ -149,7 +149,7 @@ describe("Unit: Review Forms", () => {
       test("Check if review and star rendered", () => {
         const reviewText = "test review";
         const starRating = 3;
-  
+
         render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
         const formInput = screen.getByRole("textbox");
@@ -157,9 +157,9 @@ describe("Unit: Review Forms", () => {
 
         const formStars = screen.getAllByRole("button", { name: 'reviewStar' });
         userEvent.click(formStars[starRating]);
-  
+
         userEvent.click(screen.getByRole("button", { name: /submit/i }));
-  
+
         expect(screen.getByText(reviewText)).toBeInTheDocument();
 
         const reviewStars = screen.getAllByRole('img', { name: 'reviewStar' });
@@ -196,13 +196,13 @@ describe("Unit: Review Forms", () => {
     //   ];
 
     //   db.reviews = oldReviews;
-  
+
     //   render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
-  
+
     //   //oldReviews.forEach((review) => {
     //     expect(screen.getByText("This is an old review 1")).toBeInTheDocument();
-    //     //expect(screen.getByText("This is an old review 2")).toBeInTheDocument();
-    //   //});
+    //     expect(screen.getByText("This is an old review 2")).toBeInTheDocument();
+    //   });
     // })
     // }),
 
@@ -247,7 +247,7 @@ describe("Unit: Review Forms", () => {
         expect(screen.getByText(reviewText)).toBeInTheDocument();
       })
     }),
-    
+
     describe("12. Zero Likes Review", () => {
       test("Check that an intial review has zero likes.", () => {
         const reviewText = "test review";
@@ -267,7 +267,7 @@ describe("Unit: Review Forms", () => {
         expect(getNumLikes()).toEqual(0);
       })
     }),
-    
+
     // attempt to test the missing lines (17-25 in ReviewsSection.js for the
     // finalCleanup() method mentioned in the code coverage report
     describe("Test finalCleanup() function", () => {
@@ -294,12 +294,18 @@ describe("Unit: Review Forms", () => {
         // attempt 2
         let cleanupFunc;
 
-        const spy = jest.spyOn(React, "useEffect").mockImplementationOnce(func => {
-          cleanupFunc = func;
-        });
+        const setState = jest.fn();
+        // try to spy on when useEffect is called so I can access the finalCleanup
+        // method somehow, but don't really know if this will work
+        // const spy = jest.spyOn(React, "useEffect").mockImplementationOnce(func => {
+        //   cleanupFunc = func;
+        // });
+
+        jest.spyOn(React, "useEffect").mockImplementationOnce(initState => [initState, setState]);
 
         const reviewsSection = render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
-        expect(spy).toHaveBeenCalled(); // but how do I test the finalCleanup() function?!
+        expect(setState).toHaveBeenCalled();
+        // expect(setState).toHaveBeenCalledWith("value");
 
         // attempt 3
         // const reviewText = "test review";

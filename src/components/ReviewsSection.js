@@ -13,7 +13,7 @@ export function ReviewsSection(props) {
   const [reviewsHistory, setReviewsHistory] = useState([]);
   useEffect(() => {
     const allReviewsRef = ref(db, "allReviews");
-    const finalCleanup = onValue(allReviewsRef, (snapshot) => {
+    const setReviewsHistoryOnRender = onValue(allReviewsRef, (snapshot) => {
       const reviewsSnapshot = snapshot.val();
       const reviewIds = Object.keys(reviewsSnapshot);
       const allReviews = reviewIds.map((reviewId) => {
@@ -24,7 +24,7 @@ export function ReviewsSection(props) {
       });
       setReviewsHistory(gameReviews);
     });
-    return finalCleanup;
+    return setReviewsHistoryOnRender;
   }, []);
 
   const submitReview = (reviewText, user, game, rating) => {
