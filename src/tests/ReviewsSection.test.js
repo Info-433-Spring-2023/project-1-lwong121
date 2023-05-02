@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { ReviewsSection } from "../components/ReviewsSection"
 import HUGE_GAME_DATA from '../data/games.json';
 import TEST_USER from '../components/testuser.json';
-import { getDatabase, connectDatabaseEmulator } from "firebase/database";
+import { getDatabase, connectDatabaseEmulator, ref, set as firebaseSet, push as firebasePush} from "firebase/database";
 import { initializeApp } from "firebase/app";
 import React from 'react';
 
@@ -31,6 +31,10 @@ const gameData = HUGE_GAME_DATA.find((game) => {
 });
 
 describe("Unit: Review Forms", () => {
+  beforeEach(() => {
+    firebaseSet(ref(db), null);
+  })
+
   describe("1. Render Review", () => {
     test("Check if review rendered", () => {
       const reviewText = "test review";
@@ -319,6 +323,34 @@ describe("Unit: Review Forms", () => {
 
       // console.log(screen.getByText(reviewText));
       // expect(screen.getByText(reviewText)).toBeInTheDocument();
+
+      // attempt 4
+
+      // Step 1. Set the list to be empty (but not null)
+      firebaseSet(ref(db, "allReviews"), []);
+
+      // Step 2. Create a review and push it to the list.
+      const reviewText = "test review";
+
+      const testReview =  {
+        userId: TEST_USER.uid,
+        userEmail: TEST_USER.email,
+        userName: TEST_USER.displayName,
+        review: reviewText,
+        rating: 3,
+        timestamp: Date.now(),
+        game: gameData.name,
+        likes: 2
+      }
+      firebasePush(ref(db, "allReviews"), testReview);
+
+      // Step 3. Render the component, since the list existed and had
+      // a value pushed to it, this will render the review and call
+      // the onValue function. You can also move the above push call
+      // to after the initial render, though that would need some extra
+      // helper functions called (act).
+      render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+      expect(screen.getByText(reviewText)).toBeInTheDocument();
     })
   })
 })

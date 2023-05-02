@@ -29,7 +29,7 @@ export function ReviewsSection(props) {
     });
 
     return setReviewsHistoryOnRender;
-  }, []);
+  }, [gameData, db]);
 
   const submitReview = (reviewText, user, game, rating) => {
     const newReview = {
@@ -223,7 +223,7 @@ function ReactionsSection(props) {
       isMounted = false;
       setLikes(0);
     }
-  }, [])
+  }, [reviewLikesRef])
 
   const likeReview = () => {
     const updatedLikes = likes + 1;
