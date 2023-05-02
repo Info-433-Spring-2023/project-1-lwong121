@@ -19,7 +19,7 @@ const firebaseConfig = {
   measurementId: "${config.measurementId}"
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 const db = getDatabase();
 if (location.hostname === "localhost") {
   connectDatabaseEmulator(db, "localhost", 9000);
@@ -30,7 +30,7 @@ const gameData = HUGE_GAME_DATA.find((game) => {
   return game.name === gameName;
 });
 
-describe("Unit: Review Forms", () => {
+describe("Unit: Game Reviews Section", () => {
   beforeEach(() => {
     firebaseSet(ref(db), null);
   })
@@ -57,18 +57,18 @@ describe("Unit: Review Forms", () => {
       render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
 
       const formStars = screen.getAllByRole("button", { name: 'reviewStar' });
-      userEvent.click(formStars[starRating]);
+      userEvent.click(formStars[starRating - 1]); // 0-indexed
 
       userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
       const reviewStars = screen.getAllByRole("img", { name: 'reviewStar' });
-      for (let i = 0; i < reviewStars.length; i++) {
-        if (i <= starRating) {
-          expect(reviewStars[i]).toHaveClass("star-selected");
-        } else {
-          expect(reviewStars[i]).not.toHaveClass("star-selected");
-        }
-      }
+
+      expect(reviewStars[0]).toHaveClass("star-selected");
+      expect(reviewStars[1]).toHaveClass("star-selected");
+      expect(reviewStars[2]).toHaveClass("star-selected");
+
+      expect(reviewStars[3]).not.toHaveClass("star-selected");
+      expect(reviewStars[4]).not.toHaveClass("star-selected");
     })
   })
 
@@ -136,13 +136,13 @@ describe("Unit: Review Forms", () => {
 
       userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
-      const likeBtn = screen.getByRole("button", { name: /likeButton/i });
       const getNumLikes = () => {
-        return parseInt(likeBtn.nextElementSibling.textContent);
+        return parseInt(screen.getByTestId("like-count").textContent);
       }
 
       expect(getNumLikes()).toEqual(0);
 
+      const likeBtn = screen.getByRole("button", { name: /likeButton/i });
       userEvent.click(likeBtn);
 
       expect(getNumLikes()).toEqual(1);
@@ -272,60 +272,8 @@ describe("Unit: Review Forms", () => {
     })
   })
 
-  // attempt to test the missing lines (17-25 in ReviewsSection.js for the
-  // finalCleanup() method mentioned in the code coverage report
   describe("Test finalCleanup() function", () => {
-    test("that the finalCleanup() when page is rendered", async () => {
-      // attempt 1:
-      // const fn = jest.fn(() => {
-      //   const [reviewsHistory, setReviewsHistory] = useState([]);
-      //   useEffect(() => {
-      //     setReviewsHistory([{
-      //       "game": "Counter-Strike",
-      //       "likes": 0,
-      //       "rating": 3,
-      //       "review": "test review",
-      //       "timestamp": 1682320097887,
-      //       "userEmail": "unittestuser@email.com",
-      //       "userId": "EHEpbYv3HvfwzUAC8AaCsZgaSHq1",
-      //       "userName": "unittestuser",
-      //       "firebaseKey": "-NTm4sCQb-JZfILJI0he"
-      //     }]);
-      //   });
-      //   return reviewsHistory;
-      // });
-
-      // attempt 2
-      // let cleanupFunc;
-
-      // const setState = jest.fn();
-      // try to spy on when useEffect is called so I can access the finalCleanup
-      // method somehow, but don't really know if this will work
-      // const spy = jest.spyOn(React, "useEffect").mockImplementationOnce(func => {
-      //   cleanupFunc = func;
-      // });
-
-      // jest.spyOn(React, "useEffect").mockImplementationOnce(initState => [initState, setState]);
-
-      // const reviewsSection = render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
-      // expect(setState).toHaveBeenCalled();
-      // expect(setState).toHaveBeenCalledWith("value");
-
-      // attempt 3
-      // const reviewText = "test review";
-
-      // render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
-
-      // const formInput = screen.getByRole("textbox");
-      // userEvent.type(formInput, reviewText);
-
-      // userEvent.click(screen.getByRole("button", { name: /submit/i }));
-
-      // console.log(screen.getByText(reviewText));
-      // expect(screen.getByText(reviewText)).toBeInTheDocument();
-
-      // attempt 4
-
+    test("that the finalCleanup() when page is rendered", async () =>{
       // Step 1. Set the list to be empty (but not null)
       firebaseSet(ref(db, "allReviews"), []);
 
