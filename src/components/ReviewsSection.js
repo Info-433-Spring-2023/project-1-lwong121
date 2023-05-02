@@ -13,17 +13,21 @@ export function ReviewsSection(props) {
   const [reviewsHistory, setReviewsHistory] = useState([]);
   useEffect(() => {
     const allReviewsRef = ref(db, "allReviews");
+
     const setReviewsHistoryOnRender = onValue(allReviewsRef, (snapshot) => {
       const reviewsSnapshot = snapshot.val();
       const reviewIds = Object.keys(reviewsSnapshot);
       const allReviews = reviewIds.map((reviewId) => {
         return { ...reviewsSnapshot[reviewId], firebaseKey: reviewId };
       });
+
       const gameReviews = allReviews.filter((review) => {
         return review.game === gameData.name;
       });
+
       setReviewsHistory(gameReviews);
     });
+
     return setReviewsHistoryOnRender;
   }, []);
 
