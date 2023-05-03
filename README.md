@@ -61,7 +61,7 @@ The following list contains all the architectural elements included in the React
 
 Figure 1 is a UML component diagram showing the relationships between the different architectural elements in the React app for My Game List. The elements have been grouped together according to their JavaScript module and purpose to help with understanding the overall structure of the app. The arrows represent the relationships between nested components (child → parent) and may include additional information on the cardinality if it is different from the standard 1 to 1 relationship.
 
-![Architectural Element Component Diagram](images\final-component-diagram.jpg)
+![Architectural Element Component Diagram](images/final-component-diagram.jpg)
 
 <figcaption>
 Figure 1: Architectural Element Component Diagram for MGL.
