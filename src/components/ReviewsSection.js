@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react';
-import { ref, onValue, push as firebasePush, set as firebaseSet } from 'firebase/database';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from "react";
+import {
+  ref,
+  onValue,
+  push as firebasePush,
+  set as firebaseSet
+} from "firebase/database";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons"
 
 export function ReviewsSection(props) {
   const { gameData, currentUser, db } = props;
@@ -44,11 +49,17 @@ export function ReviewsSection(props) {
 
   return (
     <section className="container reviews-section">
-      <GameReviewsSection reviewsHistory={reviewsHistory} db={db} currentUser={currentUser}></GameReviewsSection>
+      <GameReviewsSection
+        reviewsHistory={reviewsHistory}
+        db={db}
+        currentUser={currentUser} />
       {currentUser &&
         <div>
           <h2>What did you think about {gameData.name}?</h2>
-          <ReviewForm gameData={gameData} currentUsers={currentUser} submitReview={submitReview} />
+          <ReviewForm
+            gameData={gameData}
+            currentUsers={currentUser}
+            submitReview={submitReview} />
         </div>
       }
     </section>
@@ -101,12 +112,61 @@ function GameReviews(props) {
   const { reviewsHistory, db, currentUser } = props;
   const reviews = reviewsHistory.map((review) => {
     return (
-      <Review key={review.timestamp} review={review} db={db} currentUser={currentUser} />
+      <Review
+        key={review.timestamp}
+        review={review}
+        db={db}
+        currentUser={currentUser} />
     )
   });
   return (
     <div className="review-board">
       {reviews}
+    </div>
+  )
+}
+
+function getReviewTimePosted(timeStamp) {
+  const options = {year:"2-digit", month:"2-digit", day:"2-digit"};
+  const timePosted = new Date(timeStamp).toLocaleString("en-US", options);
+  return timePosted;
+}
+
+function Review(props) {
+  const { review, db, currentUser } = props;
+
+  return (
+    <div data-testid="reviewCard" className="review">
+      <div className="review-main">
+        <ReviewHeader review={review} />
+        <p>{review.review}</p>
+      </div>
+      {currentUser &&
+      <ReactionsSection
+        data-testid="reaction-section"
+        db={db}
+        reviewFirebaseKey={review.firebaseKey} />}
+    </div>
+  )
+}
+
+function ReviewHeader(props) {
+  const { review } = props;
+
+  return (
+    <div className="review-header">
+      <div>
+        <img
+          className="review-profile"
+          src="../img/profile.png"
+          alt="user profile">
+        </img>
+        <div>
+          <p>{review.userName}</p>
+          <ReviewCardStars review={review} />
+        </div>
+      </div>
+      {getReviewTimePosted(review.timestamp)}
     </div>
   )
 }
@@ -124,49 +184,22 @@ function ReviewCardStars(props) {
     }
     return (
       <span className="review-star" key={currIndex} >
-        <FontAwesomeIcon title="reviewStar" role="img" className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
+        <FontAwesomeIcon
+          title="reviewStar"
+          role="img"
+          className={reviewStarClass}
+          icon={faStar}
+          size="lg">
+        </FontAwesomeIcon>
       </span>
     )
   });
 
-  return reviewCardStars;
-}
-
-function getReviewTimePosted(timeStamp) {
-  const options = {year:'2-digit', month:'2-digit', day:'2-digit'};
-  const timePosted = new Date(timeStamp).toLocaleString('en-US', options);
-  return timePosted;
-}
-
-function Review(props) {
-  const { review, db, currentUser } = props;
-
   return (
-    <div data-testid="reviewCard" className="review">
-      <div className="review-main">
-        <ReviewHeader review={review}></ReviewHeader>
-        <p>{review.review}</p>
-      </div>
-      {currentUser && <ReactionsSection data-testid="reaction-section" db={db} reviewFirebaseKey={review.firebaseKey} />}
+    <div>
+      {reviewCardStars}
     </div>
-  )
-}
-
-function ReviewHeader(props) {
-  const { review } = props;
-
-  return (
-    <div className="review-header">
-      <div>
-        <img className="review-profile" src="../img/profile.png" alt="user profile"></img>
-        <div>
-          <p>{review.userName}</p>
-          <ReviewCardStars review={review}></ReviewCardStars>
-        </div>
-      </div>
-      {getReviewTimePosted(review.timestamp)}
-    </div>
-  )
+  );
 }
 
 function ReactionsSection(props) {
@@ -206,7 +239,7 @@ function ReactionsSection(props) {
 
 export function ReviewForm(props) {
   const { gameData, currentUsers, submitReview } = props;
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const handleInputChanges = (event) => {
     event.preventDefault();
@@ -218,7 +251,7 @@ export function ReviewForm(props) {
       return;
     }
     submitReview(reviewText, currentUsers, gameData.name, rating);
-    setReviewText('');
+    setReviewText("");
     setRating(0);
   }
   return (
@@ -232,8 +265,8 @@ export function ReviewForm(props) {
         placeholder="Enter a review"
         value={reviewText}
         onChange={handleInputChanges}
-        required
-      ></textarea>
+        required>
+      </textarea>
       <button type="submit" className="btn">Submit</button>
     </form>
   )
@@ -254,8 +287,14 @@ function FormReviewStars(props) {
       setRating(currIndex);
     }
     return (
-      <button type="button" aria-label="reviewStar" className="review-star" key={currIndex} onClick={handleRating} >
-        <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
+      <button
+        type="button"
+        aria-label="reviewStar"
+        className="review-star"
+        key={currIndex}
+        onClick={handleRating} >
+        <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg">
+        </FontAwesomeIcon>
       </button>
     )
   });

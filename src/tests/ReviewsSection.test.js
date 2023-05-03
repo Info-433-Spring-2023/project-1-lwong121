@@ -126,7 +126,7 @@ describe("Unit: Game Reviews Section", () => {
   })
 
   describe("7. Like a Review", () => {
-    test("Check that liking a review add one like", () => {
+    test("Check that liking a review adds one like", () => {
       const reviewText = "test review";
 
       render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
@@ -272,8 +272,8 @@ describe("Unit: Game Reviews Section", () => {
     })
   })
 
-  describe("Test finalCleanup() function", () => {
-    test("that the finalCleanup() when page is rendered", async () =>{
+  describe("13. Render Database Change", () => {
+    test("Check that a change in the reviews database will render a new review", async () =>{
       // Step 1. Set the list to be empty (but not null)
       firebaseSet(ref(db, "allReviews"), []);
 
