@@ -1,5 +1,7 @@
-# INFO 443 Project 1 Full Report
+# INFO 443 Project 1 Report
 By Lauren Wong and Sachi Figliolini
+
+INFO 443 Spring 2023
 
 ## Code Structure Analysis
 
@@ -133,6 +135,11 @@ This diagram is visualizing the relationships between all architectural elements
     - For games with no reviews yet, we wanted to ensure that the game reviews section would not show any reviews and that it would contain a message to clearly communicate to users that the game does not have a review yet.
 7. Like a Review - Check that liking a review adds one like
     - We wanted to ensure that clicking the like button on a review increases the count of likes for that review by 1 and that you could like a review multiple times so that the like button will work as expected when users interact with it.
+8. test
+9. test
+10. test
+11. test
+12. test
 13. Render Database Change - Check that a change in the reviews database will render a new review
     - We wanted to ensure that an update to the allReviews firebase database like adding a new review would correctly result in that new review being rendered on the page as well.
 
@@ -193,7 +200,7 @@ then run npm test and type a to run all tests
 ![Updated Test Coverage Report](images\checkpoint-3-updated-coverage.jpg)
 
 ---
-**ISSUE RESOLVED: CAN IGNORE**
+**ISSUE RESOLVED: Can Ignore**
 
 Note on missing code coverage:
 
