@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import {
-  ref,
-  onValue,
-  push as firebasePush,
-  set as firebaseSet
-} from "firebase/database";
+import { ref, onValue, push as firebasePush, set as firebaseSet } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons"
+
+const NUM_STARS = 5;
 
 export function ReviewsSection(props) {
   const { gameData, currentUser, db } = props;
@@ -49,17 +46,11 @@ export function ReviewsSection(props) {
 
   return (
     <section className="container reviews-section">
-      <GameReviewsSection
-        reviewsHistory={reviewsHistory}
-        db={db}
-        currentUser={currentUser} />
+      <GameReviewsSection reviewsHistory={reviewsHistory} db={db} currentUser={currentUser} />
       {currentUser &&
         <div>
           <h2>What did you think about {gameData.name}?</h2>
-          <ReviewForm
-            gameData={gameData}
-            currentUsers={currentUser}
-            submitReview={submitReview} />
+          <ReviewForm gameData={gameData} currentUsers={currentUser} submitReview={submitReview} />
         </div>
       }
     </section>
@@ -87,7 +78,9 @@ function GameReviewsSection(props) {
       <div>
         <div>
           <FontAwesomeIcon className="star-selected" icon={faStar} size="lg"></FontAwesomeIcon>
-          <p className="average-rating">Overall: {getAverageRating(reviewsHistory)} out of 5</p>
+          <p className="average-rating">
+            Overall: {getAverageRating(reviewsHistory)} out of {NUM_STARS}
+          </p>
         </div>
         <GameReviews reviewsHistory={reviewsHistory} db={db} currentUser={currentUser} />
       </div>
@@ -112,11 +105,7 @@ function GameReviews(props) {
   const { reviewsHistory, db, currentUser } = props;
   const reviews = reviewsHistory.map((review) => {
     return (
-      <Review
-        key={review.timestamp}
-        review={review}
-        db={db}
-        currentUser={currentUser} />
+      <Review key={review.timestamp} review={review} db={db} currentUser={currentUser} />
     )
   });
   return (
@@ -126,7 +115,7 @@ function GameReviews(props) {
   )
 }
 
-function getReviewTimePosted(timeStamp) {
+function formatReviewTimePosted(timeStamp) {
   const options = {year:"2-digit", month:"2-digit", day:"2-digit"};
   const timePosted = new Date(timeStamp).toLocaleString("en-US", options);
   return timePosted;
@@ -156,17 +145,13 @@ function ReviewHeader(props) {
   return (
     <div className="review-header">
       <div>
-        <img
-          className="review-profile"
-          src="../img/profile.png"
-          alt="user profile">
-        </img>
+        <img className="review-profile" src="../img/profile.png" alt="user profile"></img>
         <div>
           <p>{review.userName}</p>
           <ReviewCardStars review={review} />
         </div>
       </div>
-      {getReviewTimePosted(review.timestamp)}
+      {formatReviewTimePosted(review.timestamp)}
     </div>
   )
 }
@@ -174,16 +159,17 @@ function ReviewHeader(props) {
 function ReviewCardStars(props) {
   const { review } = props;
 
-  const reviewCardStars = [0, 1, 2, 3, 4].map((currIndex) => {
-    currIndex += 1;
+    const reviewCardStars = [...Array(NUM_STARS).keys()].map((currStar) => {
+    currStar += 1;
     let reviewStarClass = "";
-    if (review.rating >= currIndex) {
+    if (review.rating >= currStar) {
       reviewStarClass += " star-selected";
     } else {
       reviewStarClass = "";
     }
+
     return (
-      <span className="review-star" key={currIndex} >
+      <span className="review-star" key={currStar} >
         <FontAwesomeIcon
           title="reviewStar"
           role="img"
@@ -216,10 +202,13 @@ function ReactionsSection(props) {
         setLikes(likes);
       }
     })
-    return () => {
+
+    const cleanup = () => {
       isMounted = false;
       setLikes(0);
-    }
+    };
+
+    return cleanup;
   }, [reviewLikesRef])
 
   const likeReview = () => {
@@ -227,6 +216,7 @@ function ReactionsSection(props) {
     firebaseSet(reviewLikesRef, updatedLikes);
     setLikes(updatedLikes);
   }
+
   return (
     <div className="reactions-section">
       <button aria-label="likeButton" onClick={likeReview}>
@@ -241,10 +231,12 @@ export function ReviewForm(props) {
   const { gameData, currentUsers, submitReview } = props;
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
+
   const handleInputChanges = (event) => {
     event.preventDefault();
     setReviewText(event.target.value);
   }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (reviewText === "" && rating === 0) {
@@ -254,6 +246,7 @@ export function ReviewForm(props) {
     setReviewText("");
     setRating(0);
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <FormReviewStars rating={rating} setRating={setRating} />
@@ -274,7 +267,8 @@ export function ReviewForm(props) {
 
 function FormReviewStars(props) {
   const { rating, setRating } = props;
-  const reviewStars = [0, 1, 2, 3, 4].map((currIndex) => {
+
+  const reviewStars = [...Array(NUM_STARS).keys()].map((currIndex) => {
     currIndex += 1;
     let reviewStarClass = "active-star";
     if (rating >= currIndex) {
@@ -282,22 +276,23 @@ function FormReviewStars(props) {
     } else {
       reviewStarClass = "active-star";
     }
+
     const handleRating = (event) => {
       event.preventDefault();
       setRating(currIndex);
     }
+
     return (
-      <button
-        type="button"
+      <button type="button"
         aria-label="reviewStar"
         className="review-star"
         key={currIndex}
-        onClick={handleRating} >
-        <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg">
-        </FontAwesomeIcon>
+        onClick={handleRating}>
+        <FontAwesomeIcon className={reviewStarClass} icon={faStar} size="lg"></FontAwesomeIcon>
       </button>
     )
   });
+
   return (
     <div>
       {reviewStars}
