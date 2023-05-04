@@ -69,7 +69,9 @@ Figure 1: Architectural Element Component Diagram for MGL.
 This diagram shows the relationships between all architectural elements and their nested components in the My Game List React app. It also is grouped according to the JavaScript module they belong to.
 
 
-## Architecture Assessment + Refactoring Solutions
+## Architecture Assessment & Refactoring Solutions
+
+**Module Analyzed:** ReviewsSection.js
 
 ### Code Smells
 
@@ -209,7 +211,7 @@ then run npm test and type a to run all tests
 ![Updated Test Coverage Report](images\checkpoint-3-updated-coverage.jpg)
 
 ---
-**ISSUE RESOLVED: Can Ignore**
+**ISSUE RESOLVED: Can Ignore the following**
 
 Note on missing code coverage:
 
