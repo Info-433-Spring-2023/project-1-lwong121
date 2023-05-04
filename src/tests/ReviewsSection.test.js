@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReviewsSection } from "../components/ReviewsSection"
 import HUGE_GAME_DATA from '../data/games.json';
-import TEST_USER from '../components/testuser.json';
+import TEST_USER from './testuser.json';
 import { getDatabase, connectDatabaseEmulator, ref, set as firebaseSet, push as firebasePush} from "firebase/database";
 import { initializeApp } from "firebase/app";
 import React from 'react';
@@ -30,13 +30,13 @@ const gameData = HUGE_GAME_DATA.find((game) => {
   return game.name === gameName;
 });
 
-describe("Unit: Game Reviews Section", () => {
+describe("Game Reviews Section Tests", () => {
   beforeEach(() => {
     firebaseSet(ref(db), null);
   })
 
   describe("1. Render Review", () => {
-    test("Check if review rendered", () => {
+    test("Check if review rendered properly", () => {
       const reviewText = "test review";
 
       render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
@@ -47,6 +47,12 @@ describe("Unit: Game Reviews Section", () => {
       userEvent.click(screen.getByRole("button", { name: /submit/i }));
 
       expect(screen.getByText(reviewText)).toBeInTheDocument();
+      expect(screen.getByText(TEST_USER.displayName)).toBeInTheDocument();
+
+      const testReviewDate = Date.now();
+      const options = {year:"2-digit", month:"2-digit", day:"2-digit"};
+      const timePosted = new Date(testReviewDate).toLocaleString("en-US", options);
+      expect(screen.getByText(timePosted)).toBeInTheDocument();
     })
   })
 
