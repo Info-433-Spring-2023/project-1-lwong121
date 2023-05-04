@@ -23,35 +23,35 @@ The following list contains all the architectural elements included in the React
   - **Intro** – creates a short introduction to the website on the login page
 - About
   - **IntroSection** – creates a short introduction to the website for new users
-  - **InfoCards** – creates a section for all the cards containing information about the website’s features for users to learn about
-  - **InfoCard** – creates a single card on the page containing information on one of the website’s features
+  - **InfoCards** – creates a section for all the InfoCard components containing information about the website’s features for users to learn about
+  - **InfoCard** – creates a single card containing information on one of the website’s features
 - SignUp
   - **SignUpPage** – creates the signup page for the website
   - **SignUp** – creates the sign up section of the page where users can create a new account
 - Results
   - **Results** – creates a page displaying the search results from searching for either users or games
-  - **UserCards** – creates a page for the user search results containing a card for each user found
+  - **UserCards** – creates a page for the user search results containing a UserCard for each user found
   - **UserCard** – creates a single card to be used in the user search results, where each card contains information on a user of the website (includes name, image, and the games they have saved)
-  - **GameCards** – creates a page for the game search results containing a card for each game found
+  - **GameCards** – creates a page for the game search results containing a GameCard for each game found
   - **Genre** – creates the filters for game genre on the search page
   - **Pages** – creates the basic page layout for search results page that is used for the UserCards and GameCards components
 - GameList (it is essentially the homepage of the website)
   - **GameCards** – creates a section containing the game cards for all the games listed in the data provided to it (used to create the game cards in the GameList and Results modules)
   - **GameCard** – creates a single game card that contains an image of the game and can be clicked to open up the SelectedGamePage where users can get more information on the specific game
-  - **MyGames** – creates the section of the home page containing all the games that the user has saved
-  - **Suggestions** – creates the section of the home page containing various game suggestions for the user to play next
+  - **MyGames** – creates the section of the home page containing all the games that the user has saved, where each game will be represented in the form of GameCard components
+  - **Suggestions** – creates the section of the home page containing various game suggestions for the user to play next, where each game will be represented in the form of GameCard components
   - **StatBox** – creates the section of the home page displaying basic statistics on which games the user is planning on playing, is currently playing, and has stopped playing
 - Selected
   - **SelectedGamePage** – creates the page for a single game containing additional information on the game and reviews from other users
   - **GameInfo** – creates the section of the selected game page containing additional information on the game (e.g. description, genres, etc.)
 - ReviewsSection
   - **ReviewsSection** – creates the section of the selected game page containing the reviews of the game from other users and a section where the user can write their own review
-  - **ReviewForm** – creates the section where users can submit a review and rate the game
+  - **ReviewForm** – creates the section where users can submit a review and/or rate the game
   - **FormReviewStars** – creates the buttons that users use to rate the game in the form
-  - **GameReviewsSection** – creates a section for information on game reviews including all the reviews of the game and the average rating for the game
-  - **GameReviews** – creates a section for all the individual game review cards to be displayed
+  - **GameReviewsSection** – creates a section for information on game reviews including all of the previous reviews and ratings of the game and the average rating for the game
+  - **GameReviews** – creates a section for all the individual game Review cards to be displayed
   - **Review** – creates a single card containing information on a review (e.g. user who wrote the review, review, rating, etc.)
-  - **ReactionsSection** – creates the like button section of a review card
+  - **ReactionsSection** – creates the like buttons section of a review card
   - **ReviewHeader** – creates the header of a review card that includes information on the username, user profile image, rating, and time posted
   - **ReviewCardStars** – creates the review stars for a specific review card
 - Tags
@@ -64,11 +64,11 @@ The following list contains all the architectural elements included in the React
 Figure 1 is a UML component diagram showing the relationships between the different architectural elements in the React app for My Game List. The elements have been grouped together according to their JavaScript module and purpose to help with understanding the overall structure of the app. The arrows represent the relationships between nested components (child → parent) and may include additional information on the cardinality if it is different from the standard 1 to 1 relationship.
 
 ![Architectural Element Component Diagram](images/final-component-diagram.jpg)
-
-<figcaption>
 Figure 1: Architectural Element Component Diagram for MGL.
-</figcaption>
-This diagram is visualizing the relationships between all architectural elements, their nested elements, and JavaScript modules in the My Game List React app.
+
+This diagram shows the relationships between all architectural elements and their nested components in the My Game List React app. It also is grouped according to the JavaScript module they belong to.
+
+
 
 ### 2. Code Flows
 
@@ -77,7 +77,7 @@ The following list contains a high-level “tracing” of the “My Game List”
 
 - When first opening the system, the user clicks on the “Login” button, which causes the app to redirect to the login page.The user then can either login or click the button to create a new account.
     - App.js redirects to the LoginPage in Login.js.
-- When logging in, the user must type in their email address and password in a form or click to login with their Google account, which will display a popup with further instructions. 
+- When logging in, the user must type in their email address and password in a form or click to login with their Google account, which will display a popup with further instructions.
     - The system authorizes the credentials the user inputs through firebase and redirects back to the App.js home page.
     - The function validates the user credentials and the function signInWithGoogle both redirects to the pop up and authorizes Google authentication.
 - If they do not have an account, the user clicks on the “Create Account” button to make a new account.
@@ -87,11 +87,11 @@ The following list contains a high-level “tracing” of the “My Game List”
     - Both LoginPage and Signup redirects to App.js.
 - The user types a game into the search bar and presses enter, redirecting to the search results.
     - The NavBar in App.js redirects to the NavBar.js for rendering a search bar and taking in what the user inputs.
-        - SearchNav function allows users to search for a specific user or game. 
+        - SearchNav function allows users to search for a specific user or game.
     - Redirected to Results.js to render all the game data from the HUGE_GAME_DATA json file from '../data/games.json' to subcomponents for the user to see.
 - Click on one of the game cards of choice and scroll down to write a review.
     - Redirected to Selected.js where the user can see all the game cards and select/click on one of the cards.
-    - This redirects to Results.js, which shows the information for one of the games. 
+    - This redirects to Results.js, which shows the information for one of the games.
     - When the user scrolls ReviewsSection.js renders, which takes in what the user will input as a review.
 - They click on a specific number of stars they enjoyed the game at and write a review and click on the button “submit”.
     - ReviewsSection.js will store the review onto firebase and render the site to show the review.
@@ -105,9 +105,11 @@ Figure 2 is a UML activity diagram, which shows the relationships and dependenci
 <figcaption>
 Figure 2: Architectural Element Activity Diagram for MGL.
 </figcaption>
-This diagram visualizes the relationships between components in the My Game List React app when logging in and writing a review. 
+This diagram visualizes the relationships between components in the My Game List React app when logging in and writing a review.
 
-## Architecture Assessment + Refactoring Solutions
+## Architecture Assessment & Refactoring Solutions
+
+**Module Analyzed:** ReviewsSection.js
 
 ### Code Smells
 
@@ -115,8 +117,8 @@ This diagram visualizes the relationships between components in the My Game List
   - Location: `ReviewsSection()`
     - Description: Function is too long and contains too many helper functions or additional code that that is not necessary in the function, which makes it hard to understand and make modifications.
     - Fix: Refactored code to calculate the average rating for game reviews into a separate helper function.
-    - Location: `Review()`
-    - Description: Same as ReviewsSection(). Function is too long, which makes it hard to understand and maintain.
+  - Location: `Review()`
+    - Description: Same issue as ReviewsSection(). The function is too long and tries to accomplish too many things, which makes it hard to understand and maintain.
 - Bloated Components
   - Idea from: [https://hackernoon.com](https://hackernoon.com/lessons-learned-common-react-code-smells-and-how-to-avoid-them-f253eb9696a4)
   - Location: `ReviewsSection()`
@@ -138,6 +140,11 @@ This diagram visualizes the relationships between components in the My Game List
   - Location: `Review()`
     - Description: The variable reviewStars has the same as the ReviewStars component even though the variable represents a fixed rating for a review on a card, not the ReviewStar buttons used in the form.
     - Fix: Created a new component called ReviewCardStars to differentiate it from the FormReviewStars.
+- Magic Numbers
+  - Location: `ReviewCardStars()`, `FormReviewStars()`, and `GameReviewsSection()`
+    - Description: In the first two functions, we create arrays by hard-coding the values in for the number of stars (e.g. [0, 1, 2, 3, 4]) and in the last function we use a magic number 5 in the \<p\> tag to represent the number of stars the ratings are out of. This makes the code a bit confusing and hard to maintain in the future if we ever need to change this number.
+    - Fix: Created a global const variable called NUM_STARS for the magic number 5 and used it instead of the hardcoded values.
+
 
 ### Documentation/Readability Concerns
 
@@ -154,7 +161,7 @@ Overall, the code is documented well and readable when documenting the control f
 ### Standards Violations
 
 - Web Accessibility standards
-  - followed the guidelines from:
+  - Followed the guidelines from:
     - [https://accessibility.18f.gov](https://accessibility.18f.gov/checklist/)
     - [https://www.w3.org](https://www.w3.org/WAI/WCAG21/quickref/)
   - Violations:
@@ -162,6 +169,7 @@ Overall, the code is documented well and readable when documenting the control f
       - Fix: Changed the button element to a span element to ensure that it is not counted as an interactive element on the page so that it is keyboard accessible.
     - Lack of proper accessible names and/or descriptions for interactive elements (e.g. the review star buttons in the form and the like buttons on review cards) to help users using screen readers determine the purpose or function/action of the element.
       - Fix: Added an aria-label for the review star buttons in the form and the like buttons on the review cards.
+
 
 ### Design Quality Deficiencies
 
@@ -172,6 +180,8 @@ Overall, the code is documented well and readable when documenting the control f
 - There are no other design qualities other than modifiability required of the codebase we are analyzing. As to increase efficiency, there would need to be more front end design choices and for security there would need to be more improvements on firebase itself and the code is utilizing firebase to it's best of ability.
 
 ## Automated Tests
+
+### How to run the test suite?
 
 All tests are included in the folder titled “test” in the “src” folder of the repository.
 
@@ -196,7 +206,7 @@ Because users need to be signed in to have access to view and write the comments
 ### What aspects of the code were tested and why?
 
 1. Render Review - Check if review rendered
-    - We wanted to test whether adding a review without a star rating would be successfully added to the database and rendered under the game reviews section to ensure that users have the option of just adding a review.
+    - We wanted to test whether adding a review without a star rating would be successfully added to the database and rendered under the game reviews section in the correct format to ensure that users have the option of just adding a review.
 2. Render Stars - Check if star rating rendered
     - We wanted to test whether adding a star rating without a review would be successfully added to the database and rendered under the game reviews section to ensure that users have the option of just adding a rating.
 3. Don't Render Empty Review - Check that empty review did not render
@@ -222,6 +232,7 @@ Because users need to be signed in to have access to view and write the comments
 13. Render Database Change - Check that a change in the reviews database will render a new review
     - We wanted to ensure that an update to the allReviews firebase database like adding a new review would correctly result in that new review being rendered on the page as well.
 
+
 ### Documentation of test coverage
 
 Figure 3 is a screenshot taken of the code testing coverage report.
@@ -231,7 +242,7 @@ Figure 3 is a screenshot taken of the code testing coverage report.
 <figcaption>
 Figure 3: Screenshot of the Test Coverage Report.
 </figcaption>
-This screenshot shows the 13 tests passing and the coverage of ReviewsSection.js. 
+This screenshot shows the 13 tests passing and the coverage of ReviewsSection.js.
 
 ---
 
