@@ -136,14 +136,6 @@ This diagram visualizes the relationships between components in the My Game List
   - Location: `Review()`
     - Description: The variable reviewStars has the same as the ReviewStars component even though the variable represents a fixed rating for a review on a card, not the ReviewStar buttons used in the form.
     - Fix: Created a new component called ReviewCardStars to differentiate it from the FormReviewStars.
-- Magic Numbers
-  - Location: `ReviewCardStars()`, `FormReviewStars()`, and `GameReviewsSection()`
-    - Description: In the first two functions, we create arrays by hard-coding the values in for the number of stars (e.g. [0, 1, 2, 3, 4]) and in the last function we use a magic number 5 in the \<p\> tag to represent the number of stars the ratings are out of. This makes the code a bit confusing and hard to maintain in the future if we ever need to change this number.
-    - Fix: Created a global const variable called NUM_STARS for the magic number 5 and used it instead of the hardcoded values.
-
-### Documentation/Readability Concerns
-
-working on it asap
 
 ### Documentation/Readability Concerns
 
@@ -157,10 +149,6 @@ Overall, the code is documented well and readable when documenting the control f
 - Code Repetition
     - Location: GameReviewSection() and ReviewsSection()
     - There is code repetition in functions GameReviewSection() and ReviewsSection() in regards to checking if reviews are displayed.
-
-### Design Quality Deficiencies
-
-working on it asap
 
 ### Standards Violations
 
