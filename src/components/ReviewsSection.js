@@ -1,3 +1,4 @@
+// use ref when creating database reference
 import { useState, useEffect } from "react";
 import { ref, onValue, push as firebasePush, set as firebaseSet } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -11,6 +12,7 @@ export function ReviewsSection(props) {
   useEffect(() => {
     const allReviewsRef = ref(db, "allReviews");
 
+    // onValue is used to retrieve data from Firebase
     const setReviewsHistoryOnChange = onValue(allReviewsRef, (snapshot) => {
       const reviewsSnapshot = snapshot.val();
       const reviewIds = Object.keys(reviewsSnapshot);
@@ -40,6 +42,8 @@ export function ReviewsSection(props) {
       likes: 0
     }
     const reviewsRef = ref(db, "allReviews");
+
+    // using firebasePush to add data onto firebase database
     firebasePush(reviewsRef, newReview);
     setReviewsHistory([...reviewsHistory, newReview]);
   }
@@ -187,7 +191,7 @@ function ReviewCardStars(props) {
     </div>
   );
 }
-
+ 
 function ReactionsSection(props) {
   const { db, reviewFirebaseKey } = props;
   const [likes, setLikes] = useState(0);

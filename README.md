@@ -88,7 +88,7 @@ The following list contains a high-level “tracing” of the “My Game List”
 - The user types a game into the search bar and presses enter, redirecting to the search results.
     - The NavBar in App.js redirects to the NavBar.js for rendering a search bar and taking in what the user inputs.
         - SearchNav function allows users to search for a specific user or game. 
-    - Redirected to Results.js to render all the games that match with the search for the user to see.
+    - Redirected to Results.js to render all the game data from the HUGE_GAME_DATA json file from '../data/games.json' to subcomponents for the user to see.
 - Click on one of the game cards of choice and scroll down to write a review.
     - Redirected to Selected.js where the user can see all the game cards and select/click on one of the cards.
     - This redirects to Results.js, which shows the information for one of the games. 
@@ -145,12 +145,11 @@ Overall, the code is documented well and readable when documenting the control f
 
 - Long Functions
     - Location: ReviewsSection()
-    - The ReviewsSection() component is very long and could potentially be broken down into smaller functions to improve readability.
+    - Description: The ReviewsSection() component is very long and could potentially be broken down into smaller functions to improve readability.
+    - Fix: We refactored code to calculate the average rating for game reviews into a separate helper function as stated in the previous section.
 - Comments
-    - There are no comments in the file, which could help make it easier to understand the implementation of firebase.
-- Code Repetition
-    - Location: GameReviewSection() and ReviewsSection()
-    - There is code repetition in functions GameReviewSection() and ReviewsSection() in regards to checking if reviews are displayed.
+    - Description: There are no comments in the file, which could help make it easier to understand the implementation of firebase.
+    - Fix: Added comments regarding some firebase functions.
 
 ### Standards Violations
 
@@ -167,11 +166,17 @@ Overall, the code is documented well and readable when documenting the control f
 ### Design Quality Deficiencies
 
 - Modifiability
-    - Could break down functions into smaller functions of components. The getAverageRating() function could be made into a separate utility function.
+    - Location: getAverageRating()
+    - Description: Could break down functions into smaller functions of components to increase modifiability. For example, the getAverageRating() function could be made into a separate utility function.
+    - Fix:
 - Performance (Efficiency)
-    - In reviewsHistory() causes re-renders when it is updated.
+    - Location: reviewsHistory()
+    - Description: In reviewsHistory() causes re-renders when it is updated.
+    - Fix:
 - Security
-    - submitReview() uses the push function to add new reviews to the firebase, which could allow any user to inject malicious code into the database.
+    - Location: submitReview()
+    - Description: submitReview() uses the push function to add new reviews to the firebase, which could allow any user to inject malicious code into the database.
+    - Fix:
 
 ## Automated Tests
 
