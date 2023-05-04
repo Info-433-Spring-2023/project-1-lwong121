@@ -144,12 +144,12 @@ This diagram visualizes the relationships between components in the My Game List
 Overall, the code is documented well and readable when documenting the control flow of ReviewSection.js. However, the following are areas that could improve the documentation of the code and potential places where there might be a readability concern:
 
 - Long Functions
-    - Location: ReviewsSection()
+    - Location: `ReviewsSection()`
     - Description: The ReviewsSection() component is very long and could potentially be broken down into smaller functions to improve readability.
     - Fix: We refactored code to calculate the average rating for game reviews into a separate helper function as stated in the previous section.
 - Comments
     - Description: There are no comments in the file, which could help make it easier to understand the implementation of firebase.
-    - Fix: Added comments regarding some firebase functions.
+    - Fix: Added comments regarding the firebase of the `ref` object, `onValue()` function, and `firebasePush` function.
 
 ### Standards Violations
 
@@ -166,17 +166,10 @@ Overall, the code is documented well and readable when documenting the control f
 ### Design Quality Deficiencies
 
 - Modifiability
-    - Location: getAverageRating()
-    - Description: Could break down functions into smaller functions of components to increase modifiability. For example, the getAverageRating() function could be made into a separate utility function.
-    - Fix:
-- Performance (Efficiency)
-    - Location: reviewsHistory()
-    - Description: In reviewsHistory() causes re-renders when it is updated.
-    - Fix:
-- Security
-    - Location: submitReview()
-    - Description: submitReview() uses the push function to add new reviews to the firebase, which could allow any user to inject malicious code into the database.
-    - Fix:
+    - Location: `getAverageRating()`
+    - Description: Could break down functions into smaller functions of components to increase modifiability. For example, the getAverageRating() function could be made into separate calculation of the average rating and the total number of reviews to help modifiability.
+    - Fix: Changed getAverageRating() into two function getTotalRating() and getAverageRating()
+- There are no other design qualities other than modifiability required of the codebase we are analyzing. As to increase efficiency, there would need to be more front end design choices and for security there would need to be more improvements on firebase itself and the code is utilizing firebase to it's best of ability.
 
 ## Automated Tests
 
