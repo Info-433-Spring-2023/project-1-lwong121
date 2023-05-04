@@ -70,8 +70,44 @@ Figure 1: Architectural Element Component Diagram for MGL.
 </figcaption>
 This diagram is visualizing the relationships between all architectural elements, their nested elements, and JavaScript modules in the My Game List React app.
 
+### 2. Code Flows
 
-## Architecture Assessment + Refactoring Solutions
+#### Process Flow:
+The following list contains a high-level “tracing” of the “My Game List” React web app. The list is in functional order, listing when the steps occur in a linear sequence of input to output. Each statement contains what the user would input or click on in a front end perspective describing what renders or state-change flow and the subpoints contain a description of the code involved with that step from a code perspective.
+
+- When first opening the system, the user clicks on the “Login” button, which causes the app to redirect to the login page.The user then can either login or click the button to create a new account.
+    - App.js redirects to the LoginPage in Login.js.
+- When logging in, the user must type in their email address and password in a form or click to login with their Google account, which will display a popup with further instructions. 
+    - The system authorizes the credentials the user inputs through firebase and redirects back to the App.js home page.
+    - The function validates the user credentials and the function signInWithGoogle both redirects to the pop up and authorizes Google authentication.
+- If they do not have an account, the user clicks on the “Create Account” button to make a new account.
+    - Firebase stores the new credentials to the database.
+    - LoginPage redirects to SignUp in SignUp.js.
+- After logging in or creating an account the user is redirected back to the homepage.
+    - Both LoginPage and Signup redirects to App.js.
+- The user types a game into the search bar and presses enter, redirecting to the search results.
+    - The NavBar in App.js redirects to the NavBar.js for rendering a search bar and taking in what the user inputs.
+        - SearchNav function allows users to search for a specific user or game. 
+    - Redirected to Results.js to render all the games that match with the search for the user to see.
+- Click on one of the game cards of choice and scroll down to write a review.
+    - Redirected to Selected.js where the user can see all the game cards and select/click on one of the cards.
+    - This redirects to Results.js, which shows the information for one of the games. 
+    - When the user scrolls ReviewsSection.js renders, which takes in what the user will input as a review.
+- They click on a specific number of stars they enjoyed the game at and write a review and click on the button “submit”.
+    - ReviewsSection.js will store the review onto firebase and render the site to show the review.
+
+#### UML Activity Diagram:
+
+Figure 2 is a UML activity diagram, which shows the relationships and dependencies between the different architectural components in the React app for My Game List when a user wants to login and write a review for a game. The arrows represent the various relationship flows within the app that allow the user complete their task, the dark circles represent the start and end of the flow, and the purple diamonds represent the split in decision.
+
+![UML Activity Diagram](images/final-activity-diagram.png)
+
+<figcaption>
+Figure 2: Architectural Element Activity Diagram for MGL.
+</figcaption>
+This diagram visualizes the relationships between components in the My Game List React app when logging in and writing a review. 
+
+## Refactoring Solutions
 
 ### Code Smells
 
@@ -103,6 +139,26 @@ This diagram is visualizing the relationships between all architectural elements
     - Description: The variable reviewStars has the same as the ReviewStars component even though the variable represents a fixed rating for a review on a card, not the ReviewStar buttons used in the form.
     - Fix: Created a new component called ReviewCardStars to differentiate it from the FormReviewStars.
 
+### Documentation/Readability Concerns
+
+working on it asap
+
+### Documentation/Readability Concerns
+
+Overall, the code is documented well and readable when documenting the control flow of ReviewSection.js. However, the following are areas that could improve the documentation of the code and potential places where there might be a readability concern:
+
+- Long Functions
+    - Location: ReviewsSection()
+    - The ReviewsSection() component is very long and could potentially be broken down into smaller functions to improve readability.
+- Comments
+    - There are no comments in the file, which could help make it easier to understand the implementation of firebase.
+- Code Repetition
+    - Location: GameReviewSection() and ReviewsSection()
+    - There is code repetition in functions GameReviewSection() and ReviewsSection() in regards to checking if reviews are displayed.
+
+### Design Quality Deficiencies
+
+working on it asap
 
 ### Standards Violations
 
@@ -116,8 +172,36 @@ This diagram is visualizing the relationships between all architectural elements
     - Lack of proper accessible names and/or descriptions for interactive elements (e.g. the review star buttons in the form and the like buttons on review cards) to help users using screen readers determine the purpose or function/action of the element.
       - Fix: Added an aria-label for the review star buttons in the form and the like buttons on the review cards.
 
+### Design Quality Deficiencies
+
+- Modifiability
+    - Could break down functions into smaller functions of components. The getAverageRating() function could be made into a separate utility function.
+- Performance (Efficiency)
+    - In reviewsHistory() causes re-renders when it is updated.
+- Security
+    - submitReview() uses the push function to add new reviews to the firebase, which could allow any user to inject malicious code into the database.
 
 ## Automated Tests
+
+All tests are included in the folder titled “test” in the “src” folder of the repository.
+
+To run the tests first navigate to the “project-1-lwong121” repository and install:
+- `Npm install`
+- `Npm install -g firebase-tools`
+- `Npm install react-scripts`
+- `Npm install jest-dom`
+- `npm install --save-dev @testing-library/jest-dom`
+- `npm install --save-dev @testing-library/react`
+- `npm install --save-dev @testing-library/user-event`
+- `npm install firebase`
+- `npm install @fortawesome/react-fontawesome`
+- `npm install @fortawesome/free-solid-svg-icons`
+
+
+After installing, run `npm test` to run all the test and `npm test -- --coverage` to run the tests and get a coverage report for ReviewsSection.js.
+
+Because users need to be signed in to have access to view and write the comments, we have made the test user already logged in
+
 
 ### What aspects of the code were tested and why?
 
@@ -135,14 +219,29 @@ This diagram is visualizing the relationships between all architectural elements
     - For games with no reviews yet, we wanted to ensure that the game reviews section would not show any reviews and that it would contain a message to clearly communicate to users that the game does not have a review yet.
 7. Like a Review - Check that liking a review adds one like
     - We wanted to ensure that clicking the like button on a review increases the count of likes for that review by 1 and that you could like a review multiple times so that the like button will work as expected when users interact with it.
-8. test
-9. test
-10. test
-11. test
-12. test
+8. Render Review and Stars - Check if review and star rendered
+    - We wanted to ensure that both the star rating and the written review will render together.
+9. Old review rendered" - Check that old reviews are displayed
+    - For reviews with past reviews, we wanted to make sure that old submitted reviews will render when opening a game profile.
+10. Multiple Reviews - Check if multiple review rendered
+    - We wanted to ensure that a single user can submit multiple reviews for the same game.
+11. Username Render - Check if username in the review rendered
+    - We wanted to ensure that the usernames would be displayed on the review.
+12. Zero Likes Review - Check that an intial review has zero likes
+    - We wanted to check if a new review has zero likes on it when it is initially posted.
 13. Render Database Change - Check that a change in the reviews database will render a new review
     - We wanted to ensure that an update to the allReviews firebase database like adding a new review would correctly result in that new review being rendered on the page as well.
 
+### Documentation of test coverage
+
+Figure 3 is a screenshot taken of the code testing coverage report.
+
+![Test Coverage Report](images/testcoverage.png)
+
+<figcaption>
+Figure 3: Screenshot of the Test Coverage Report.
+</figcaption>
+This screenshot shows the 13 tests passing and the coverage of ReviewsSection.js. 
 
 ---
 

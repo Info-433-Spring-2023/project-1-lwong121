@@ -177,38 +177,34 @@ describe("Unit: Game Reviews Section", () => {
     })
   })
 
-  // not working
-  // describe("9. Old review rendered", () => {
-  //   test("Check that old reviews are displayed", () => {
-  //   const oldReviews = [
-  //     {
-  //       userId: "1",
-  //       userEmail: "user1@gmail.com",
-  //       userName: "test old user 1",
-  //       review: "This is an old review 1.",
-  //       rating: 4,
-  //       timestamp: Date.now(),
-  //     },
-  //     // {
-  //     //   id: "2",
-  //     //   userEmail: "user2@gmail.com",
-  //     //   userName: "test old user 2",
-  //     //   review: "This is an old review 2.",
-  //     //   rating: 5,
-  //     //   timestamp: Date.now(),
-  //     // },
-  //   ];
+  describe("9. Old review rendered", () => {
+    test("Check that old reviews are displayed", async () => {
+      // Step 1. Set the list to be empty (but not null)
+      firebaseSet(ref(db, "allReviews"), []);
+  
+      // Step 2. Create a review and push it to the list.
+      const reviewText = "test review";
 
-  //   db.reviews = oldReviews;
+      const testReview = {
+        userId: TEST_USER.uid,
+        userEmail: TEST_USER.email,
+        userName: TEST_USER.displayName,
+        review: reviewText,
+        rating: 3,
+        timestamp: Date.now(),
+        game: gameData.name,
+        likes: 2,
+      };
 
-  //   render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
-
-  //   //oldReviews.forEach((review) => {
-  //     expect(screen.getByText("This is an old review 1")).toBeInTheDocument();
-  //     expect(screen.getByText("This is an old review 2")).toBeInTheDocument();
-  //   });
-  // })
-  // })
+      firebasePush(ref(db, "allReviews"), testReview);
+  
+      // Step 3. Render the component
+      const {getByText} = render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
+  
+      // Step 4. Check if the review is displayed
+      expect(getByText(reviewText)).toBeInTheDocument();
+    });
+  });
 
   describe("10. Multiple Reviews", () => {
     test("Check if multiple review rendered", async () => {
@@ -253,7 +249,7 @@ describe("Unit: Game Reviews Section", () => {
   })
 
   describe("12. Zero Likes Review", () => {
-    test("Check that an intial review has zero likes.", () => {
+    test("Check that an intial review has zero likes", () => {
       const reviewText = "test review";
 
       render(<ReviewsSection currentUser={TEST_USER} gameData={gameData} db={db} />);
