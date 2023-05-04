@@ -1,6 +1,6 @@
 // use ref when creating database reference
 import { useState, useEffect } from "react";
-import { ref, onValue, push as firebasePush, set as firebasePush } from "firebase/database";
+import { ref, onValue, push as firebasePush, set as firebaseSet } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons"
 
@@ -61,17 +61,12 @@ export function ReviewsSection(props) {
   );
 }
 
-function getTotalRating(reviewsHistory) {
+function getAverageRating(reviewsHistory) {
   let totalRating = 0;
   reviewsHistory.forEach((review) => {
     totalRating += review.rating;
   });
-  return totalRating;
-}
 
-function getAverageRating(reviewsHistory) {
-  const totalRating = getTotalRating(reviewsHistory);
-  
   let avgRating = totalRating / reviewsHistory.length;
   avgRating = Math.round(avgRating * 10) / 10;
 
@@ -222,7 +217,7 @@ function ReactionsSection(props) {
 
   const likeReview = () => {
     const updatedLikes = likes + 1;
-    firebasePush(reviewLikesRef, updatedLikes);
+    firebaseSet(reviewLikesRef, updatedLikes);
     setLikes(updatedLikes);
   }
 
